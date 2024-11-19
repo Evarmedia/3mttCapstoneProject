@@ -22,7 +22,7 @@ app.options('*', cors(corsOptions)); // Handle preflight requests
 const authRoutes = require('./routes/auth.route.js');
 const taskRoutes = require('./routes/task.route.js');
 
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL)
   .then(() => console.log('Connected to MongoDB'))
   .catch(error => {
     console.error('MongoDB connection error:', error);
