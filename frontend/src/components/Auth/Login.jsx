@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,7 +6,25 @@ import apiClient from '../../api/apiClient';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [isCountdownActive, setIsCountdownActive] = useState(true); // Start with countdown active
+  const [countdown, setCountdown] = useState(55); // Countdown timer in seconds
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isCountdownActive) {
+      let timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            window.location.reload(); // Reload the page when countdown ends
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer); // Clean up interval on component unmount
+    }
+  }, [isCountdownActive]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,12 +53,20 @@ const Login = () => {
         draggable: true,
         progress: undefined,
       });
+
+      // Start the countdown if the server might be sleeping
+      setIsCountdownActive(true);
     }
   };
   
   return (
     <div>
       <ToastContainer />
+      {isCountdownActive && (
+        <div className="mb-4 p-4 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded">
+          Kindly wait, the server is sleeping, try again in... {countdown} seconds
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg border border-gray-300">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Login</h2>
         <div className="mb-4">
