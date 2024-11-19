@@ -9,9 +9,20 @@ const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+// app.use(cors());
 // Define the port
 const PORT = process.env.PORT || 3555;
+
+
+// Allow requests from specific origins
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://mishak-capstone-project.vercel.app/'], // Replace with your frontend URL(s)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // Allows cookies and other credentials if needed
+};
+
+// Use cors with options
+app.use(cors(corsOptions));
 
 
 // Routes
