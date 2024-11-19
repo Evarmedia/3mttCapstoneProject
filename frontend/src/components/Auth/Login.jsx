@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import apiClient from '../../api/apiClient';
@@ -71,6 +71,14 @@ const Login = () => {
         >
           Login
         </button>
+        <NavLink to='/'>
+        <div className='w-full mt-2'>
+          {"Don't Have an account? "}
+          <span className='underline text-blue-600 font-semibold'>
+            register here
+          </span>
+        </div>
+      </NavLink>
       </form>
     </div>
   );
