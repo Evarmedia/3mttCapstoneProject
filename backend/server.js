@@ -19,7 +19,7 @@ const authRoutes = require('./routes/auth.route.js');
 const taskRoutes = require('./routes/task.route.js');
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://mishak:hGZqGJpQP8so4WEh@cluster0.wkefw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch((error) => console.error("MongoDB connection error:", error));
 
